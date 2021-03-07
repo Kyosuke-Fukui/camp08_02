@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>しりとり</title>
+    <link
+      rel="stylesheet"
+      href="https://kyosuke-fukui.github.io/camp08_02/css/reset.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://kyosuke-fukui.github.io/camp08_02/style.css"
+    />
+  </head>
+
+  <body>
+    <h1>しりとりで遊ぼう</h1>
+    <div>
+      <div id="output"></div>
+    </div>
+
+    <div style="margin: 10px auto 10px">
+      名前:
+      <input type="text" id="username" />
+    </div>
+    <div style="margin: 10px auto 5px">↓に単語を入力してください<br /></div>
+    <div><textarea name="" id="text" cols="30" rows="1"></textarea></div>
+    <div style="margin: 5px auto 10px">
+      <button id="send">送信</button>
+      <button id="reset">リセット</button>
+      <button id="howTo">遊び方</button>
+    </div>
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
+    <script src="https://kyosuke-fukui.github.io/camp08_02/js/firebase.js"></script>
+    <script src="https://kyosuke-fukui.github.io/camp08_02/js/functions.js"></script>
+  </body>
+</html>
