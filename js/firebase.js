@@ -15,12 +15,12 @@ window.onload = function () {
 // Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "",
-  authDomain: "camp-08-8d2a0.firebaseapp.com",
-  projectId: "camp-08-8d2a0",
-  storageBucket: "camp-08-8d2a0.appspot.com",
-  messagingSenderId: "241734327880",
-  appId: "1:241734327880:web:481ae83be55ad1bc76827d",
-  databaseURL: "https://camp-08-8d2a0-default-rtdb.firebaseio.com/",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+  databaseURL: "",
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -40,26 +40,27 @@ $("#send").on("click", async function () {
   let moji = await data[0]["word"]; //仕様上必ずひらがなまたはカタカナになる
   let resp = await data[0]["meanings"][0]["definitions"][0]["definition"];
 
-  var arrSearch = usedWord.indexOf(text);
-  //分岐1 すでに使われた単語を使った場合
-  if (arrSearch != -1) {
-    swal("その単語はすでに使われています");
-  } else if (
-    //分岐2 初回もしくはひらカナどちらかが前の言葉の最後の文字と一致していた場合
+  if (
+    //分岐1-1 初回もしくはひらカナどちらかが前の言葉の最後の文字と一致していた場合
     lastLetter === "" ||
     (await moji.slice(0, 1)) === lastLetter ||
     (await kanaToHira(moji).slice(0, 1)) === lastLetter ||
     (await hiraToKana(moji).slice(0, 1)) === lastLetter
   ) {
-    swal(resp); //言葉の意味を表示
-
-    if (
+    //分岐2 すでに使われた単語を使った場合
+    var arrSearch = usedWord.indexOf(text);
+    if (arrSearch != -1) {
+      swal("その単語はすでに使われています");
+    }
+    //分岐3 「ん」で終わる単語を使った場合
+    else if (
       (await kanaToHira(moji).slice(-1)) === "ん" ||
       (await hiraToKana(moji).slice(-1)) === "ン"
     ) {
-      boo = Boolean(0);
-      //敗者判定
+      boo = Boolean(0); //敗者判定
     }
+    //特に問題なければそのままここへ
+    await swal(resp); //言葉の意味を表示
     //firebaseデータベースへ追加
     await newPostRef.push({
       username: $("#username").val(),
@@ -67,7 +68,7 @@ $("#send").on("click", async function () {
       read: moji,
     });
   } else {
-    //分岐3 初めの文字が前の言葉の最後の文字と一致しない場合
+    //分岐1-2 初めの文字が前の言葉の最後の文字と一致しない場合
     swal(`"「${kanaToHira(lastLetter)}」から始まる言葉を入力してください"`);
   }
   $("#text").val("");
